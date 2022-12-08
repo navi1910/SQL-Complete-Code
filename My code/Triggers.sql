@@ -1,0 +1,28 @@
+# Tiggers
+USE employees;
+COMMIT;
+
+# BEFORE INSERT
+DELIMITER $$
+CREATE TRIGGER before_salaries_insert
+BEFORE INSERT ON salaries
+FOR EACH ROW
+BEGIN
+IF NEW.salary < 0 THEN
+SET NEW.salary = 0;
+END IF;
+END$$
+DELIMITER ;
+
+
+# BEFORE UPDATE
+DELIMITER $$
+CREATE TRIGGER before_salaries_update
+BEFORE UPDATE ON salaries
+FOR EACH ROW
+BEGIN
+IF NEW.salary < 0 THEN
+SET NEW.salary = OLD.salary;
+END IF;
+END$$
+DELIMITER ;
